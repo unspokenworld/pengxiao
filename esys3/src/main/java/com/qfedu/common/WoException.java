@@ -15,7 +15,7 @@ public class WoException extends RuntimeException {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5680000136411496594L;
+	private  static final long serialVersionUID = -5680000136411496594L;
 
 	/**
 	 * Recording the log of this class.
