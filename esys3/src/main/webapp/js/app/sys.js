@@ -23,7 +23,6 @@ Sys.MenuGrid = function(options) {
 		url : 'sys/menu/list',
 		idField : 'id',
 		treeField : 'name',
-		textField : 'name',
 		// pagination : true,
 		singleSelect : true,
 		columns : [ [ {
@@ -64,8 +63,14 @@ Sys.MenuGrid = function(options) {
 			field : 'resourceType',
 			title : '资源类型',
 			width : 150,
-			woCreate : {},
-			woUpdate : {}
+			woCreate : {
+				woType : 'woDictionaryCombo',
+				woDictionaryType : 'menutype'
+			},
+			woUpdate : {
+				woType : 'woDictionaryCombo',
+				woDictionaryType : 'menutype'
+			}
 		}, {
 			field : 'parentId',
 			title : '上级ID',
@@ -159,7 +164,7 @@ Sys.MenuGrid = function(options) {
 		} ]
 	});
 };
-// 第一 框架
+
 Sys.DictionaryGrid = function(options) {
 	var tableId = 'woTable_' + options.woNodeId;
 	// 在tabs上增加一个tabpanel
@@ -168,87 +173,50 @@ Sys.DictionaryGrid = function(options) {
 		content : '<table id="' + tableId + '"></table>',
 		closable : true
 	});
-	// 第二 配置wogrid的参数对象 options
 	$('#' + tableId).wogrid({
-		// table id
 		woId : tableId,
-		// 标题
 		woTitle : options.woNodeText,
-
 		url : 'sys/dictionary/list',
+		idField : 'id',
+		woGridType : 'Standard',
+		pagination : true,
+		singleSelect : false,
 		woDeleteUrl : 'sys/dictionary/delete',
 		woCreateUrl : 'sys/dictionary/create',
 		woUpdateUrl : 'sys/dictionary/update',
-		// 上级ID字段
-		woGridType : 'Standard',
-		idField : 'id',
-		// 第三 配置列
 		columns : [ [ {
 			field : 'id',
 			title : 'ID',
 			width : 50,
 			hidden : true,
-			// 该字段会在修改表单中出现
 			woUpdate : {
 				readonly : true
 			}
 		}, {
-			field : 'val',
-			title : '值',
-			width : 50,
-
-			// 该字段会在修改表单和创建表单中出现
-			woUpdate : {
-				
-			},
-			woCreate : {
-				
-			}
-		}, {
-			field : 'name',
-			title : '名称',
-			width : 50,
-
-			// 该字段会在修改表单中出现
-			woUpdate : {
-				
-			},
-			woCreate : {
-				
-			}
-		}, {
 			field : 'dicType',
 			title : '类型',
-			width : 50,
-
-			// 该字段会在修改表单中出现
-			woUpdate : {
-				
-			},
-			woCreate : {
-				
-			}
+			width : 100,
+			woCreate : {},
+			woUpdate : {}
+		}, {
+			field : 'name',
+			title : 'KEY',
+			width : 100,
+			woCreate : {},
+			woUpdate : {}
+		}, {
+			field : 'val',
+			title : '值',
+			width : 100,
+			woCreate : {},
+			woUpdate : {}
 		}, {
 			field : 'description',
-			title : '描述',
-			width : 100,
-
-			// 该字段会在修改表单中出现
-			woUpdate : {
-				
-			},
-			woCreate : {
-				
-			}
+			title : '说明',
+			width : 150,
+			woCreate : {},
+			woUpdate : {}
 		} ] ],
-		// 第四 配置表单
-		woUpdateForm : {
-			woButtons : [ {
-				woButtonType : 'woSave'
-			}, {
-				woButtonType : 'woCancel'
-			} ]
-		},
 		woCreateForm : {
 			woButtons : [ {
 				woButtonType : 'woSave'
@@ -256,7 +224,17 @@ Sys.DictionaryGrid = function(options) {
 				woButtonType : 'woCancel'
 			} ]
 		},
-		// 第五部 配置 toolbar
+		woUpdateForm : {
+			woButtons : [ {
+				woButtonType : 'woSave'
+			}, {
+				woButtonType : 'woCancel'
+			} ]
+		},
+		woSearchFields : [ {
+			woName : 'dicType',
+			prompt : '请输入类型'
+		} ],
 		toolbar : [ {
 			woButtonType : 'woCreate'
 		}, {
@@ -267,9 +245,8 @@ Sys.DictionaryGrid = function(options) {
 			woButtonType : 'woClear'
 		} ]
 	});
-
 };
-//第一 框架
+
 Sys.RoleGrid = function(options) {
 	var tableId = 'woTable_' + options.woNodeId;
 	// 在tabs上增加一个tabpanel
@@ -278,83 +255,137 @@ Sys.RoleGrid = function(options) {
 		content : '<table id="' + tableId + '"></table>',
 		closable : true
 	});
-	// 第二 配置wogrid的参数对象 options
 	$('#' + tableId).wogrid({
-		// table id
 		woId : tableId,
-		// 标题
 		woTitle : options.woNodeText,
-
 		url : 'sys/role/list',
+		idField : 'id',
+		woGridType : 'Standard',
+		pagination : true,
+		singleSelect : false,
 		woDeleteUrl : 'sys/role/delete',
 		woCreateUrl : 'sys/role/create',
 		woUpdateUrl : 'sys/role/update',
-		// 上级ID字段
-		woGridType : 'Standard',
-		idField : 'id',
-		// 第三 配置列
 		columns : [ [ {
 			field : 'id',
 			title : 'ID',
 			width : 50,
 			hidden : true,
-			// 该字段会在修改表单中出现
 			woUpdate : {
-				readonly : true
-			}
-		}, {
-			field : 'description',
-			title : '描述',
-			width : 50,
-
-			// 该字段会在修改表单和创建表单中出现
-			woUpdate : {
-				
-			},
-			woCreate : {
-				
+				readonly : true,
+				woColSpan : 2,
+				width : 400
 			}
 		}, {
 			field : 'name',
 			title : '名称',
-			width : 50,
-
-			// 该字段会在修改表单中出现
-			woUpdate : {
-				
-			},
-			woCreate : {
-				
-			}
+			width : 100,
+			woCreate : {},
+			woUpdate : {}
+		}, {
+			field : 'typeName',
+			title : '类型',
+			width : 100
 		}, {
 			field : 'type',
 			title : '类型',
-			width : 50,
-
-			// 该字段会在修改表单中出现
-			woUpdate : {
-				
-			},
+			width : 100,
+			hidden : true,
 			woCreate : {
-				
+				woType : 'woDictionaryCombo',
+				woDictionaryType : 'roletype'
+			},
+			woUpdate : {
+				woType : 'woDictionaryCombo',
+				woDictionaryType : 'roletype'
+			}
+		}, {
+			field : 'description',
+			title : '说明',
+			width : 150,
+			woCreate : {
+				woColSpan : 2,
+				width : 400
+			},
+			woUpdate : {
+				woColSpan : 2,
+				width : 400
 			}
 		} ] ],
-		// 第四 配置表单
-		woUpdateForm : {
-			woButtons : [ {
-				woButtonType : 'woSave'
-			}, {
-				woButtonType : 'woCancel'
-			} ]
-		},
 		woCreateForm : {
+			woFields : [ {
+				woType : 'combotree',
+				woName : 'menus',
+				label : '菜单',
+				idField : 'id',
+				textField : 'name',
+				treeField : 'name',
+				parentField : 'parentId',
+				multiple : true,
+				cascadeCheck : false,
+				woColSpan : 2,
+				width : 400,
+				panelWidth : 400,
+				url : 'sys/menu/getChildren',
+				columns : [ [ {
+					field : 'id',
+					title : 'ID',
+					width : 50
+				}, {
+					field : 'name',
+					title : '名称',
+					width : 100
+				}, {
+					field : 'parentId',
+					title : '上级ID',
+					width : 50
+				} ] ]
+			} ],
 			woButtons : [ {
 				woButtonType : 'woSave'
 			}, {
 				woButtonType : 'woCancel'
 			} ]
 		},
-		// 第五部 配置 toolbar
+		woUpdateForm : {
+			woFields : [ {
+				woType : 'combotree',
+				woName : 'menus',
+				label : '菜单',
+				idField : 'id',
+				textField : 'name',
+				treeField : 'name',
+				parentField : 'parentId',
+				multiple : true,
+				cascadeCheck : false,
+				woColSpan : 2,
+				width : 400,
+				panelWidth : 400,
+				url : 'sys/menu/getChildren',
+				columns : [ [ {
+					field : 'id',
+					title : 'ID',
+					width : 50
+				}, {
+					field : 'name',
+					title : '名称',
+					width : 100
+				}, {
+					field : 'parentId',
+					title : '上级ID',
+					width : 50
+				} ] ]
+			} ],
+			woButtons : [ {
+				woButtonType : 'woSave'
+			}, {
+				woButtonType : 'woCancel'
+			} ]
+		},
+		woSearchFields : [ {
+			woName : 'name',
+			woText : '名称'
+		} ],
 		toolbar : [ {
 			woButtonType : 'woCreate'
 		}, {
@@ -365,5 +396,125 @@ Sys.RoleGrid = function(options) {
 			woButtonType : 'woClear'
 		} ]
 	});
+};
 
+Sys.UserGrid = function(options) {
+	var tableId = 'woTable_' + options.woNodeId;
+	// 在tabs上增加一个tabpanel
+	$('#' + options.woTabId).tabs('add', {
+		title : options.woNodeText,
+		content : '<table id="' + tableId + '"></table>',
+		closable : true
+	});
+	$('#' + tableId).wogrid({
+		woId : tableId,
+		woTitle : options.woNodeText,
+		url : 'sys/user/list',
+		idField : 'id',
+		woGridType : 'Standard',
+		pagination : true,
+		singleSelect : false,
+		woDeleteUrl : 'sys/user/delete',
+		woCreateUrl : 'sys/user/create',
+		woUpdateUrl : 'sys/user/update',
+		columns : [ [ {
+			field : 'id',
+			title : 'ID',
+			width : 50,
+			hidden : true,
+			woUpdate : {
+				readonly : true,
+				woColSpan : 2,
+				width : 400
+			}
+		}, {
+			field : 'loginName',
+			title : '登录名',
+			width : 150,
+			woCreate : {},
+			woUpdate : {}
+		}, {
+			field : 'password',
+			title : '密码',
+			width : 150,
+			woCreate : {},
+			woUpdate : {}
+		}, {
+			field : 'createTime',
+			title : '时间',
+			width : 200
+		} ] ],
+		woCreateForm : {
+			woFields : [ {
+				woType : 'combogrid',
+				woName : 'roles',
+				label : '角色',
+				idField : 'id',
+				textField : 'name',
+				multiple : true,
+				pagination : true,
+				woColSpan : 2,
+				width : 400,
+				panelWidth : 400,
+				url : 'sys/role/list',
+				columns : [ [ {
+					field : 'id',
+					title : 'ID',
+					width : 100
+				}, {
+					field : 'name',
+					title : '名称',
+					width : 200
+				} ] ]
+			} ],
+			woButtons : [ {
+				woButtonType : 'woSave'
+			}, {
+				woButtonType : 'woCancel'
+			} ]
+		},
+		woUpdateForm : {
+			woFields : [ {
+				woType : 'combogrid',
+				woName : 'roles',
+				label : '角色',
+				idField : 'id',
+				textField : 'name',
+				multiple : true,
+				pagination : true,
+				woColSpan : 2,
+				width : 400,
+				panelWidth : 400,
+				url : 'sys/role/list',
+				columns : [ [ {
+					field : 'id',
+					title : 'ID',
+					width : 100
+				}, {
+					field : 'name',
+					title : '名称',
+					width : 200
+				} ] ]
+			} ],
+			woButtons : [ {
+				woButtonType : 'woSave'
+			}, {
+				woButtonType : 'woCancel'
+			} ]
+		},
+		woSearchFields : [ {
+			woName : 'loginName',
+			woText : '类型',
+			prompt : '请输入登录名'
+		} ],
+		toolbar : [ {
+			woButtonType : 'woCreate'
+		}, {
+			woButtonType : 'woEdit'
+		}, {
+			woButtonType : 'woDelete'
+		}, {
+			woButtonType : 'woClear'
+		} ]
+	});
 };
